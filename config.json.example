@@ -1,5 +1,5 @@
 {
-    "logLevel": "debug",
+    "logLevel": "debug",   // "off", "fatal", "error", "warn", "info", "debug", "trace" or "all"
     "logColors": true,
 
     "cliPort": 17117,
@@ -57,62 +57,11 @@
         "password": ""
     },
 
-    "switching": {
-        "switch1": {
-            "enabled": false,
-            "algorithm": "sha256",
-            "ports": {
-                "3333": {
-                    "diff": 10,
-                    "varDiff": {
-                        "minDiff": 16,
-                        "maxDiff": 512,
-                        "targetTime": 15,
-                        "retargetTime": 90,
-                        "variancePercent": 30
-                    }
-                }
-            }
-        },
-        "switch2": {
-            "enabled": false,
-            "algorithm": "scrypt",
-            "ports": {
-                "4444": {
-                    "diff": 10,
-                    "varDiff": {
-                        "minDiff": 16,
-                        "maxDiff": 512,
-                        "targetTime": 15,
-                        "retargetTime": 90,
-                        "variancePercent": 30
-                    }
-                }
-            }
-        },
-        "switch3": {
-            "enabled": false,
-            "algorithm": "x11",
-            "ports": {
-                "5555": {
-                    "diff": 0.001,
-                    "varDiff": {
-                        "minDiff": 0.001,
-                        "maxDiff": 1, 
-                        "targetTime": 15, 
-                        "retargetTime": 60, 
-                        "variancePercent": 30 
-                    }
-                }
-            }
-        }
-    },
-
     "profitSwitch": {
         "enabled": false,
         "updateInterval": 600,
         "depth": 0.90,
-        "usePoloniex": true,
-        "useBittrex": true
+        "usePoloniex": false,
+        "useBittrex": false
     }
 }
