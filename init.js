@@ -1,4 +1,3 @@
-//require('newrelic');
 var fs = require('fs');
 var path = require('path');
 var os = require('os');
@@ -12,7 +11,6 @@ var CliListener = require('./libs/cliListener.js');
 var PoolWorker = require('./libs/poolWorker.js');
 var PaymentProcessor = require('./libs/paymentProcessor.js');
 var Website = require('./libs/website.js');
-var ProfitSwitch = require('./libs/profitSwitch.js');
 
 var algos = require('stratum-pool/lib/algoProperties.js');
 
@@ -81,13 +79,10 @@ if (cluster.isWorker){
         case 'website':
             new Website(logger);
             break;
-        case 'profitSwitch':
-            new ProfitSwitch(logger);
-            break;
     }
 
     return;
-} 
+}
 
 
 //Read all pool configs from pool_configs and join them with their coin profile
@@ -135,7 +130,7 @@ var buildPoolConfigs = function(){
     poolConfigFiles.forEach(function(poolOptions){
 
         poolOptions.coinFileName = poolOptions.coin;
-    
+
        for (var i=0; i < poolOptions.auxes.length; i++){
             var auxFilePath = 'coins/' + poolOptions.auxes[i].coin;
             if (!fs.existsSync(auxFilePath)){
@@ -498,27 +493,6 @@ var startWebsite = function(){
 };
 
 
-var startProfitSwitch = function(){
-
-    if (!portalConfig.profitSwitch || !portalConfig.profitSwitch.enabled){
-        //logger.error('Master', 'Profit', 'Profit auto switching disabled');
-        return;
-    }
-
-    var worker = cluster.fork({
-        workerType: 'profitSwitch',
-        pools: JSON.stringify(poolConfigs),
-        portalConfig: JSON.stringify(portalConfig)
-    });
-    worker.on('exit', function(code, signal){
-        logger.error('Master', 'Profit', 'Profit switching process died, spawning replacement...');
-        setTimeout(function(){
-            startProfitSwitch(poolConfigs);
-        }, 2000);
-    });
-};
-
-
 
 (function init(){
 
@@ -533,8 +507,6 @@ var startProfitSwitch = function(){
     startAuxPaymentProcessor();
 
     startWebsite();
-
-    startProfitSwitch();
 
     startCliListener();
         }, 10000);
