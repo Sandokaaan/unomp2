@@ -41,7 +41,7 @@
   "dependencies": {
     "async": "1.5.2",
     "base58-native": "*",
-    "bignum": "0.11.0",
+    "bignum": "0.13.1",
     "bitcoin": "3.0.1",
     "body-parser": "1.15.0",
     "colors": "1.1.2",
