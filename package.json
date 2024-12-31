@@ -49,7 +49,7 @@
     "express": "4.13.4",
     "extend": "3.0.0",
     "lodash": "~4.17.4",
-    "log4js": "0.6.31",
+    "log4js": "6.9.1",
     "mysql": "2.10.2",
     "newrelic": "8.17.1",
     "node-json-minify": "1.0.0",
