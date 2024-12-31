@@ -25,6 +25,7 @@ var portalConfig = JSON.parse(JSON.minify(fs.readFileSync("config.json", {encodi
 var poolConfigs;
 
 var logger = PoolLogger.getLogger();
+logger.level = portalConfig.logLevel;
 
 logger.info('New Relic');
 try {
