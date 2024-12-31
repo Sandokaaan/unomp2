@@ -1,4 +1,4 @@
-var Stratum = require('merged-pooler');
+var Stratum = require('stratum-pool');
 var redis   = require('redis');
 var net     = require('net');
 
@@ -201,6 +201,9 @@ module.exports = function(logger){
         pool.on('share', function(isValidShare, isValidBlock, data){
 
             var shareData = JSON.stringify(data);
+console.log('shareData ' + shareData);
+console.log('isValidShare ' + isValidShare);
+console.log('isValidBlock ' + isValidShare);
 
             if (data.blockHash && !isValidBlock)
                 logger.debug(logSystem, logComponent, logSubCat, 'We thought a block was found but it was rejected by the daemon, share data: ' + shareData);
