@@ -5,6 +5,8 @@
     "auxes": [ // Defines auxillery coins
         {
             "coin": "lottoshares.json",
+            "name": "lottoshares",
+            "symbol": "LTS",
             "daemons": [ // It is reccomended to supply multiple daemons here for redundancy
                 {
                     "host": "127.0.0.1",
@@ -15,7 +17,10 @@
             ]
         }
     ],
-    "address": "n4jSe18kZMCdGcZqaYprShXW6EH1wivUK1",
+
+    "addresses": [  // Make sure to generate legacy address! Use: litecoin-cli getnewaddress "" legacy
+        "n4jSe18kZMCdGcZqaYprShXW6EH1wivUK1"
+    ]
 
     "rewardRecipients": {
         "n37vuNFkXfk15uFnGoVyHZ6PYQxppD3QqK": 1.5,
