@@ -58,6 +58,6 @@
     "stratum-pool": "git+https://github.com/Sandokaaan/node-stratum-pool.git"
   },
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=20.0.0"
   }
 }
