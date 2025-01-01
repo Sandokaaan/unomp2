@@ -13,13 +13,13 @@ module.exports = function(logger){
     var portalConfig = JSON.parse(process.env.portalConfig);
 
     var forkId = process.env.forkId;
-    
+
     var pools = {};
 
     var proxySwitch = {};
 
     var redisClient = redis.createClient(portalConfig.redis.port, portalConfig.redis.host);
-	// redis auth if enabled 
+	// redis auth if enabled
          redisClient.auth(portalConfig.redis.password);
          redisClient.select(portalConfig.redis.db);
 
@@ -200,10 +200,20 @@ module.exports = function(logger){
         var pool = Stratum.createPool(poolOptions, authorizeFN, logger);
         pool.on('share', function(isValidShare, isValidBlock, data){
 
-            var shareData = JSON.stringify(data);
-console.log('shareData ' + shareData);
-console.log('isValidShare ' + isValidShare);
-console.log('isValidBlock ' + isValidShare);
+             //Sando: Debug for rejected blocks
+             var shareData;
+             try {
+                 // if data are BigInt
+                 shareData = data.toString(16);
+             } catch (e1) {
+                 try {
+                     // some unserializable object
+                     shareData = JSON.stringify(data);
+                 } catch (e2) {
+                     // unknown data
+                     shareData = 'unknown';
+                }
+            }
 
             if (data.blockHash && !isValidBlock)
                 logger.debug(logSystem, logComponent, logSubCat, 'We thought a block was found but it was rejected by the daemon, share data: ' + shareData);
