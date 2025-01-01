@@ -202,18 +202,17 @@ module.exports = function(logger){
 
              //Sando: Debug for rejected blocks
              var shareData;
-             try {
-                 // if data are BigInt
+             if (data && data.error) // some error message
+                 shareData = data.error;
+             else try { // if data are BigInt
                  shareData = data.toString(16);
              } catch (e1) {
-                 try {
-                     // some unserializable object
-                     shareData = JSON.stringify(data);
-                 } catch (e2) {
-                     // unknown data
+                 try { // some buffer
+                     shareData = data.toString('hex');
+                 } catch (e2) { // unknown data
                      shareData = 'unknown';
-                }
-            }
+                 }
+            }		
 
             if (data.blockHash && !isValidBlock)
                 logger.debug(logSystem, logComponent, logSubCat, 'We thought a block was found but it was rejected by the daemon, share data: ' + shareData);
