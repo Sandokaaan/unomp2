@@ -132,7 +132,10 @@ a good pool operator. For starters be sure to read:
 Clone the repository and run `npm update` for all the dependencies to be installed:
 
 ```bash
-sudo apt-get install build-essential libssl-dev npm nodejs nodejs-legacy
+sudo apt-get update
+sudo apt-get install git redis nano wget curl ntp screen
+sudo apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev
+sudo apt-get install libboost-all-dev npm nodejs libminiupnpc-dev software-properties-common
 curl https://raw.githubusercontent.com/creationix/nvm/v0.16.1/install.sh | sh
 source ~/.profile
 nvm install 22.0.0   # or any hight
