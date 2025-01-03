@@ -56,12 +56,8 @@ current round so that each and every share will be rewarded.
 
 * This portal ~~does not~~ will never have user accounts/logins/registrations. Instead, miners simply use their coin address for stratum authentication. 
 
-* Coin-switching ports using coin-networks and crypto-exchange APIs to detect profitability. 
-
 * Past MPOS functionality is no longer maintained, althought it is working for now.
  
-* Basic multipooling features included, but *NOT* enabled by default. You must follow the [README](//github.com/sigwo/unified-node-open-mining-portal/blob/master/multipool/README) in the [multipool](//github.com/sigwo/unified-node-open-mining-portal/blob/master/multipool) folder. More updates *WILL* happen in the multipool options and will stay open source.
-
 #### Attack Mitigation
 * Detects and thwarts socket flooding (garbage data sent over socket in order to consume system resources).
 * Detects and thwarts zombie miners (botnet infected computers connecting to your server to use up sockets but not sending any shares).
@@ -141,10 +137,11 @@ Clone the repository and run `npm update` for all the dependencies to be install
 sudo apt-get install build-essential libssl-dev npm nodejs nodejs-legacy
 curl https://raw.githubusercontent.com/creationix/nvm/v0.16.1/install.sh | sh
 source ~/.profile
-nvm install 0.10.25
-nvm use 0.10.25
-git clone https://github.com/UNOMP/unified-node-open-mining-portal.git unomp
-cd unomp
+nvm install 22.0.0   # or any hight
+nvm use 22.0.0
+nvm alias default 22.0.0
+git clone https://github.com/Sandokaaan/unomp2.git
+cd unomp2
 npm update
 ```
 
@@ -257,63 +254,12 @@ Explanation for each field:
         "password": ""  /* similar "" - no password, or any non blank  "redispassword" to enable it */
     },
 
-
-    /* With this switching configuration, you can setup ports that accept miners for work based on
-       a specific algorithm instead of a specific coin. Miners that connect to these ports are
-       automatically switched a coin determined by the server. The default coin is the first
-       configured pool for each algorithm and coin switching can be triggered using the
-       cli.js script in the scripts folder.  */
-       
-    "switching": {
-        "switch1": {
-            "enabled": false,
-            "algorithm": "sha256",
-            "ports": {
-                "3333": {
-                    "diff": 10,
-                    "varDiff": {
-                        "minDiff": 16,
-                        "maxDiff": 512,
-                        "targetTime": 15,
-                        "retargetTime": 90,
-                        "variancePercent": 30
-                    }
-                }
-            }
-        },
-        "switch2": {
-            "enabled": false,
-            "algorithm": "scrypt",
-            "ports": {
-                "4444": {
-                    "diff": 10,
-                    "varDiff": {
-                        "minDiff": 16,
-                        "maxDiff": 512,
-                        "targetTime": 15,
-                        "retargetTime": 90,
-                        "variancePercent": 30
-                    }
-                }
-            }
-        },
-        "switch3": {
-            "enabled": false,
-            "algorithm": "x11",
-            "ports": {
-                "5555": {
-                    "diff": 0.001
-                }
-            }
-        }
-    },
-
     "profitSwitch": {
         "enabled": false,
         "updateInterval": 600,
         "depth": 0.90,
-        "usePoloniex": true,
-        "useBittrex": true
+        "usePoloniex": false,
+        "useBittrex": false
     }
 }
 ````
@@ -355,9 +301,11 @@ Description of options:
 {
     "enabled": true, //Set this to false and a pool will not be created from this config file
     "coin": "litecoin.json", //Reference to coin config file in 'coins' directory
-    "auxes": [
+    "auxes": [ // Upgrade: You can add up to 30 AUX-coins of the same mining algo as main coin!
         {
             "coin": "viacoin.json",
+            "symbol": "VIA",
+            "name": "Viacoin",
             "daemons": [
                 {
                     "host": "127.0.0.1",
@@ -366,9 +314,24 @@ Description of options:
                     "password": "password"
                 }
             ]
+        },
+        {
+            "coin": "dogecoin.json",
+            "symbol": "DOGE",
+            "name": "Dogecoin",
+            "daemons": [
+                {
+                    "host": "127.0.0.1",
+                    "port": 22555,
+                    "user": "user",
+                    "password": "password"
+                }
+            ]
         }
     ],
-    "address": "mi4iBXbBsydtcc5yFmsff2zCFVX4XG7qJc", //Address to where block rewards are given
+    "addresses": [  // Must be a legacy addrees, to obtain one, use: litecoin-cli getnewaddress "" legacy
+        "mi4iBXbBsydtcc5yFmsff2zCFVX4XG7qJc"  //Address to where block rewards are given
+    ]
 
     /* Block rewards go to the configured pool wallet address to later be paid out to miners,
        except for a percentage that can go to, for examples, pool operator(s) as pool fees or
@@ -508,7 +471,9 @@ Donations
 ---------
 Below is my donation address. The original [credits](//github.com/sigwo/unified-node-open-mining-portal/blob/master/CREDITS.md) are listed here because I felt scammy if I totally removed them. They no longer are supporting the current development effort. Please donate to:
 
-* BTC: `19svwpxWAhD4zsfeEnnxExZgnQ46A3mrt3`
+* BTC: `3P5xpMWe53GZDb54x6hBBYYPFzpfpyFMcD`
+* LTC: `MRk8ngGtWwpF7U5PhdyPvcMBbcJuuSLMQx`
+* DOGE: `D7r3p4CaKaHi92v74BVPGLxrtCXNeoSTcG`
 
 Donors (email me to be added):
 * [elitemobb from altnuts.com](http://altnuts.com)
