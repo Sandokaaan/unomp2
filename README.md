@@ -138,7 +138,7 @@ sudo apt-get install build-essential libtool autotools-dev autoconf pkg-config l
 sudo apt-get install libboost-all-dev npm nodejs libminiupnpc-dev software-properties-common
 curl https://raw.githubusercontent.com/creationix/nvm/v0.16.1/install.sh | sh
 source ~/.profile
-nvm install 22.0.0   # or any hight
+nvm install 22.0.0   # or any higher
 nvm use 22.0.0
 nvm alias default 22.0.0
 git clone https://github.com/Sandokaaan/unomp2.git
